@@ -3,6 +3,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
 
+// allow app to use json data transfer
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -11,9 +14,15 @@ app.get('/', (req, res) => {
 });
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
+  .then(() => { app.listen(PORT, () => {
+    console.log(`Connected to MongoDB`);
+    // Start the server after successful connection to MongoDB
+    console.log(`Server is running on port ${PORT}`);
+  }); })
+  .catch(err => {
+    console.error('Database connection error:', err);
+  });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+
+
