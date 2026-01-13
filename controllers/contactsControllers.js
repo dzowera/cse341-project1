@@ -35,11 +35,26 @@ export const deleteContactById = async (req, res) => {
     const deletedContact = await Contact.findByIdAndDelete(req.params.id);
 
     if(deleteContactById){
-      return res.status(2000).json({message: `Contact with ID: ${deletedContact.id} has been deleted`})
+      return res.status(2000).json({message: `Contact with ID: ${deletedContact._id} has been deleted`})
     }
 
   } catch (error) {
     res.status(500).json({message: "Error deleting contact"});
     
+  }
+}
+
+export const updateContactById = async (req, res) =>{
+  try {
+    const {id} = req.params;
+
+    const updatedContact = await Contact.findByIdAndUpdate(id, req.body)
+
+    if(!updatedContact) res.status(404).json({message: `Could not update Contact with ID: ${updatedContact._id}`})
+    
+    res.status(200).json({message: "Contact has been updated"})
+    
+  } catch (error) {
+    res.status(500).json({message: "Error updating contact"});
   }
 }
