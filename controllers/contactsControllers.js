@@ -29,3 +29,17 @@ export const createContact = async (req, res) => {
     res.status(500).json({ message: "Error creating contact" });
   }
 }
+
+export const deleteContactById = async (req, res) => {
+  try {
+    const deletedContact = await Contact.findByIdAndDelete(req.params.id);
+
+    if(deleteContactById){
+      return res.status(2000).json({message: `Contact with ID: ${deletedContact.id} has been deleted`})
+    }
+
+  } catch (error) {
+    res.status(500).json({message: "Error deleting contact"});
+    
+  }
+}
