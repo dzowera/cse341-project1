@@ -23,9 +23,9 @@ export const getContactById = async (req, res) => {
 
 export const createContact = async (req, res) => {
   try {
-    const newContact = Contact.create(req.body)
-    res.status(201).json(newContact)
-  }catch(error){
+    const newContact = await Contact.create(req.body);
+    res.status(201).json({ message: "Contact created successfully with ID: " + newContact._id });
+  } catch (error) {
     res.status(500).json({ message: "Error creating contact" });
   }
 }
