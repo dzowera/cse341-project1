@@ -1,29 +1,27 @@
-import router from "./routes/contactsRoutes.js";
 import express from "express";
 import dotenv from "dotenv";
+import router from "./routes/contactsRoutes.js";
+import connectDB from "./config/db.js";
+
 dotenv.config();
-import mongoose from "mongoose";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// allow app to use json data transfer
+// JSON middleware
 app.use(express.json());
 
+// Home route
 app.get("/", (req, res) => {
   res.send("Hello World! This my contacts API");
 });
 
+// Routes
 app.use("/api/contacts", router);
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Connected to MongoDB`);
-      // Start the server after successful connection to MongoDB
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Database connection error:", err);
-  });
+
+// Connect DB, then start server
+connectDB();
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
