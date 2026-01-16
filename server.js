@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 // JSON middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Home route
 app.get("/", (req, res) => {

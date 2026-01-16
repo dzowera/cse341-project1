@@ -54,18 +54,26 @@ router.get('/:id', getContactById);
  *           schema:
  *             type: object
  *             required:
- *               - name
+ *               - firstName
+ *               - lastName
  *               - email
  *             properties:
- *               name:
+ *               firstName:
  *                 type: string
- *                 example: John Doe
+ *                 example: Innocent
+ *               lastName:
+ *                 type: string
+ *                 example: Dzowera
  *               email:
  *                 type: string
- *                 example: john@example.com
- *               phone:
+ *                 example: inno@gmail.com
+ *               favoriteColor:
  *                 type: string
- *                 example: "+265991234567"
+ *                 example: Blue
+ *               birthday:
+ *                 type: string
+ *                 format: date
+ *                 example: 1998-06-12
  *     responses:
  *       201:
  *         description: Contact created successfully
@@ -111,12 +119,17 @@ router.delete('/:id', deleteContactById);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               firstName:
+ *                 type: string
+ *               lastName:
  *                 type: string
  *               email:
  *                 type: string
- *               phone:
+ *               favoriteColor:
  *                 type: string
+ *               birthday:
+ *                 type: string
+ *                 format: date
  *     responses:
  *       200:
  *         description: Contact updated successfully

@@ -3,9 +3,14 @@ import mongoose from 'mongoose';
 
 const ContactSchema = new mongoose.Schema({
 
-    name:{
+    firstName:{
       type: String,
-      required: [true, "Name is required"],
+      required: [true, "First name is required"],
+      trim: true
+    },
+    lastName:{
+      type: String,
+      required: [true, "Last name is required"],
       trim: true
     },
     email:{
@@ -13,6 +18,12 @@ const ContactSchema = new mongoose.Schema({
       required: true,
       unique: true,
       lowercase: [true, 'the field must have lowercase characters'], 
+    },
+    favoriteColor:{
+      type: String,
+    },
+    birthday:{
+      type: Date,
     },
     phone: {
       type: String,
