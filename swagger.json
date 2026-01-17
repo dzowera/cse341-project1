@@ -1,0 +1,172 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My Contacts API",
+    "version": "1.0.0",
+    "description": "API documentation for Contacts App"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/contacts": {
+      "get": {
+        "summary": "Get all contacts",
+        "description": "Retrieve a list of all contacts from the database",
+        "responses": {
+          "200": {
+            "description": "Contacts retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new contact",
+        "description": "Add a new contact to the database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email"
+                ],
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "Innocent"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Dzowera"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "inno@gmail.com"
+                  },
+                  "favoriteColor": {
+                    "type": "string",
+                    "example": "Blue"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "1998-06-12"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact created successfully"
+          }
+        }
+      }
+    },
+    "/api/contacts/{id}": {
+      "get": {
+        "summary": "Get a contact by ID",
+        "description": "Retrieve a single contact using its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact found"
+          },
+          "404": {
+            "description": "Contact not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a contact",
+        "description": "Remove a contact from the database using its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact deleted successfully"
+          },
+          "404": {
+            "description": "Contact not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a contact",
+        "description": "Update an existing contact using its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "favoriteColor": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact updated successfully"
+          },
+          "404": {
+            "description": "Contact not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}
