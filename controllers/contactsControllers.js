@@ -30,26 +30,27 @@ export const createContact = async (req, res) => {
   try {
     const newContact = await Contact.create(req.body);
 
-    const {
-      firstName,
-      lastName,
-      email,
-      favoriteColor,
-      birthday
-    } = newContact;
+    if (!newContact) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid contact data. Please check the documentation."
+      });
+    }
+
+    const { firstName, lastName, email, favoriteColor, birthday } = newContact;
 
     res.status(201).json({
+      success: true,
       message: "Contact created successfully",
-      contact: {
-        firstName,
-        lastName,
-        email,
-        favoriteColor,
-        birthday
-      }
+      contact: { firstName, lastName}
     });
   } catch (error) {
-    res.status(500).json({ message: "Error creating contact" });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error creating contact",
+      error: error.message
+    });
   }
 };
 
