@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://project1-0pl3.onrender.com",
         description: "Development server",
       },
     ],
