@@ -4,18 +4,18 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "My Contacts API",
+      title: "Contacts & Businesses API",
       version: "1.0.0",
-      description: "API documentation for Contacts App"
+      description: "API documentation for Contacts and Businesses",
     },
     servers: [
       {
         url: "http://localhost:3000",
-        description: "Development server"
-      }
-    ]
+        description: "Development server",
+      },
+    ],
   },
-  apis: ["./routes/*.js"], // Swagger will look for annotations in route files
+  apis: ["./routes/*.js"], // Look at all route files
 };
 
 const swaggerSpec = swaggerJSDoc(options);

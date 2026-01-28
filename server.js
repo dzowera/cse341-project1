@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import router from "./routes/contactsRoutes.js";
+import contactsRouter from "./routes/contactsRoutes.js";
+import businessesRouter from "./routes/businessesRoutes.js";
 import connectDB from "./config/db.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
@@ -21,7 +22,10 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-app.use("/api/contacts", router);
+app.use("/api/contacts", contactsRouter);
+app.use("/api/businesses", businessesRouter);
+
+// Swagger API documentation route
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
