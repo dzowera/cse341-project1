@@ -7,7 +7,7 @@ import {
   updateContactById
 } from "../controllers/contactsControllers.js";
 
-import { protect } from "../middleware/auth.middleware.js";
+import { adminOnly, protect } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -112,7 +112,7 @@ router.post("/", protect, createContact);
  *       401:
  *         description: Unauthorized
  */
-router.delete("/:id", protect, deleteContactById);
+router.delete("/:id", protect, adminOnly, deleteContactById);
 
 /**
  * @swagger
