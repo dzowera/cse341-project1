@@ -1,29 +1,26 @@
-import { json } from "express";
 import jwt from "jsonwebtoken";
 
-export const protect = (req, res, next) =>{
+export const protect = (req, res, next) => {
   try {
     let token;
-    // check the auth header
-    if(
+
+    if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
-    ){
+    ) {
       token = req.headers.authorization.split(" ")[1];
     }
-    // if no token
-    if(!token){
-      return res.status(401).json({message: "Not authorized, no token"})
-    }
-    // verify the token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    
-    // attach the decoded to object req.user
-    req.user = decoded
-    next()
 
+    if (!token) {
+      return res.status(401).json({ message: "Not authorized, no token" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = decoded;
+    next();
   } catch (error) {
-    res.status(401).json({message: "Not Authorized. Token failed"});
-    
+    console.error("JWT verification failed:", error);
+    res.status(401).json({ message: "Not authorized, token invalid or expired" });
   }
-}
+};

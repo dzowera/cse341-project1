@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.routes.js";
 import connectDB from "./config/db.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 3000;
 // JSON middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Home route
 app.get("/", (req, res) => {

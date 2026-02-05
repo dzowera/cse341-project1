@@ -31,16 +31,16 @@ export const registerUser = async (req, res) => {
     await newUser.save();
 
     // provide feedback to the client
-    res.status(201).json({ message: "User registered successfully" },
-      {
-        user: {
-          id: newUser._id,
-          email: newUser.email,
-          role: newUser.role,
-          createdAt: newUser.createdAt
-        }
-      }
-    );
+   res.status(201).json({
+    message: "User registered successfully",
+    user: {
+      id: newUser._id,
+      email: newUser.email,
+      role: newUser.role,
+      createdAt: newUser.createdAt
+    }
+});
+
 
   } catch (error) {
     console.error("Error registering user:", error);
@@ -79,7 +79,12 @@ export const loginUser = async (req, res) => {
     // Successful login
     res.status(200).json({
       message: "Login successful",
-      token
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      }
     });
 
   } catch (error) {
