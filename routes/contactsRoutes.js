@@ -1,12 +1,14 @@
+import express from "express";
 import {
   getAllContacts,
   getContactById,
   createContact,
   deleteContactById,
   updateContactById
-} from '../controllers/contactsControllers.js';
+} from "../controllers/contactsControllers.js";
 
-import express from 'express';
+import { protect } from "../middleware/auth.middleware.js";
+
 const router = express.Router();
 
 /**
@@ -15,11 +17,12 @@ const router = express.Router();
  *   get:
  *     summary: Get all contacts
  *     description: Retrieve a list of all contacts from the database
+ *     tags: [Contacts]
  *     responses:
  *       200:
  *         description: Contacts retrieved successfully
  */
-router.get('/', getAllContacts);
+router.get("/", getAllContacts);
 
 /**
  * @swagger
@@ -27,6 +30,7 @@ router.get('/', getAllContacts);
  *   get:
  *     summary: Get a contact by ID
  *     description: Retrieve a single contact using its ID
+ *     tags: [Contacts]
  *     parameters:
  *       - in: path
  *         name: id
@@ -39,7 +43,7 @@ router.get('/', getAllContacts);
  *       404:
  *         description: Contact not found
  */
-router.get('/:id', getContactById);
+router.get("/:id", getContactById);
 
 /**
  * @swagger
@@ -47,6 +51,9 @@ router.get('/:id', getContactById);
  *   post:
  *     summary: Create a new contact
  *     description: Add a new contact to the database
+ *     tags: [Contacts]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -77,8 +84,10 @@ router.get('/:id', getContactById);
  *     responses:
  *       201:
  *         description: Contact created successfully
+ *       401:
+ *         description: Unauthorized
  */
-router.post('/', createContact);
+router.post("/", protect, createContact);
 
 /**
  * @swagger
@@ -86,6 +95,9 @@ router.post('/', createContact);
  *   delete:
  *     summary: Delete a contact
  *     description: Remove a contact from the database using its ID
+ *     tags: [Contacts]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -97,8 +109,10 @@ router.post('/', createContact);
  *         description: Contact deleted successfully
  *       404:
  *         description: Contact not found
+ *       401:
+ *         description: Unauthorized
  */
-router.delete('/:id', deleteContactById);
+router.delete("/:id", protect, deleteContactById);
 
 /**
  * @swagger
@@ -106,6 +120,9 @@ router.delete('/:id', deleteContactById);
  *   put:
  *     summary: Update a contact
  *     description: Update an existing contact using its ID
+ *     tags: [Contacts]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -135,7 +152,9 @@ router.delete('/:id', deleteContactById);
  *         description: Contact updated successfully
  *       404:
  *         description: Contact not found
+ *       401:
+ *         description: Unauthorized
  */
-router.put('/:id', updateContactById);
+router.put("/:id", protect, updateContactById);
 
 export default router;

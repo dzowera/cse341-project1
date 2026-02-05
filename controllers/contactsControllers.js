@@ -1,5 +1,6 @@
 import Contact from "../models/contact.model.js";
 
+
 // GET all contacts
 export const getAllContacts = async (req, res) => {
   try {
