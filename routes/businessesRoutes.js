@@ -7,6 +7,8 @@ import {
   deleteBusinessById
 } from "../controllers/businessControllers.js";
 
+import { adminOnly, protect } from "../middleware/auth.middleware.js";
+
 const router = express.Router();
 
 /**
@@ -14,7 +16,9 @@ const router = express.Router();
  * /api/businesses:
  *   post:
  *     summary: Create a new business
- *     description: Add a new business to the database
+ *     description: Add a new business to the database (authentication required)
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -24,6 +28,7 @@ const router = express.Router();
  *             required:
  *               - name
  *               - address
+ *               - phone
  *             properties:
  *               name:
  *                 type: string
@@ -37,8 +42,10 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Business created successfully
+ *       401:
+ *         description: Unauthorized
  */
-router.post("/", createBusiness);
+router.post("/", protect, createBusiness);
 
 /**
  * @swagger
@@ -77,7 +84,9 @@ router.get("/:id", getBusinessById);
  * /api/businesses/{id}:
  *   put:
  *     summary: Update a business
- *     description: Update an existing business using its ID
+ *     description: Update an existing business (authentication required)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -100,17 +109,21 @@ router.get("/:id", getBusinessById);
  *     responses:
  *       200:
  *         description: Business updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Business not found
  */
-router.put("/:id", updateBusinessById);
+router.put("/:id", protect, updateBusinessById);
 
 /**
  * @swagger
  * /api/businesses/{id}:
  *   delete:
  *     summary: Delete a business
- *     description: Remove a business from the database using its ID
+ *     description: Delete a business (admin only)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,9 +133,13 @@ router.put("/:id", updateBusinessById);
  *     responses:
  *       200:
  *         description: Business deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (admin only)
  *       404:
  *         description: Business not found
  */
-router.delete("/:id", deleteBusinessById);
+router.delete("/:id", protect, adminOnly, deleteBusinessById);
 
 export default router;
