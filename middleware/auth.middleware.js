@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+// Middleware to protect routes and ensure the user is authenticated
 export const protect = (req, res, next) => {
   try {
     let token;
@@ -25,6 +26,7 @@ export const protect = (req, res, next) => {
   }
 };
 
+// Middleware to restrict access to admin-only routes
 export const adminOnly = (req, res, next) => {
   if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Forbidden" });
